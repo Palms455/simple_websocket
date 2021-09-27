@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	"sort"
 )
 
 //wsChan канал для передачи данных от пользователей
@@ -33,6 +33,7 @@ type WsJson struct {
 	Action string `json:"action"`
 	Message string `json:"message"`
 	MessageType string `json:"message_type"`
+	ConnectedUsers []string `json:"connected_users"`
 }
 
 // WsPayload структура для передачи сообщения в канал
@@ -88,9 +89,18 @@ func ListenToWsChan() {
 
 	for {
 		e := <- wsChan
-		response.Action = "Получены данные"
-		response.Message = fmt.Sprintf("Сообщение %s", e.Action)
-		broadCastAll(response)
+		switch e.Action {
+		case "username":
+			clients[e.Conn] = e.Username
+			users := getUsers()
+			response.Action = "list_users"
+			response.ConnectedUsers = users
+			broadCastAll(response)
+
+			//response.Action = "Получены данные"
+			//response.Message = fmt.Sprintf("Сообщение %s", e.Action)
+			//broadCastAll(response)
+		}
 	}
 }
 
@@ -104,5 +114,16 @@ func broadCastAll(response WsJson)  {
 			delete(clients, client)
 		}
 	}
+
+}
+
+// getUsers возвращает список пользователей на момент вызова функции
+func getUsers() []string{
+	var users []string
+	for _, user := range clients {
+		users = append(users, user)
+	}
+	sort.Strings(users)
+	return users
 
 }
