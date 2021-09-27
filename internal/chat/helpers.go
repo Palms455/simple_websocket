@@ -19,4 +19,5 @@ func (chat *Chat) configLogger() error {
 // configRoutes конфигурируем роутинг
 func (chat *Chat) configRoutes() {
 	chat.routes.Get("/", http.HandlerFunc(handlers.Home))
+	chat.routes.Get("/ws", http.HandlerFunc(handlers.WsEndpoint))
 }

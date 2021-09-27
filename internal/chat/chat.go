@@ -4,6 +4,7 @@ import (
 	"github.com/bmizerany/pat"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"simple_websocket/internal/handlers"
 )
 
 //Базовая струтура Чата
@@ -33,6 +34,7 @@ func (chat *Chat) Start() error {
 
 	chat.configRoutes()
 	chat.logger.Info("configure routes")
-
+	chat.logger.Info("start ws Listen")
+	go handlers.ListenToWsChan()
 	return http.ListenAndServe(chat.config.BindAddr, chat.routes)
 }
