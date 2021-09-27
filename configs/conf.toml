@@ -1,0 +1,3 @@
+[web-server]
+bind_addr = ":5000"
+logger_level = "debug"

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../../База знаний/Golang SPECIALIST/Программирование на языке Go. Уровень 2/Материалы/4/7.ServerAndDB2/.idea/7.ServerAndDB2.iml" filepath="$PROJECT_DIR$/../../../База знаний/Golang SPECIALIST/Программирование на языке Go. Уровень 2/Материалы/4/7.ServerAndDB2/.idea/7.ServerAndDB2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../База знаний/GoWebsocketUdemy/.idea/GoWebsocketUdemy.iml" filepath="$PROJECT_DIR$/../../../База знаний/GoWebsocketUdemy/.idea/GoWebsocketUdemy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/simple_websocket.iml" filepath="$PROJECT_DIR$/.idea/simple_websocket.iml" />
+    </modules>
+  </component>
+</project>
