@@ -20,4 +20,7 @@ func (chat *Chat) configLogger() error {
 func (chat *Chat) configRoutes() {
 	chat.routes.Get("/", http.HandlerFunc(handlers.Home))
 	chat.routes.Get("/ws", http.HandlerFunc(handlers.WsEndpoint))
+
+	fileServer := http.FileServer(http.Dir("./static"))
+	chat.routes.Get("/static/", http.StripPrefix("/static", fileServer))
 }
