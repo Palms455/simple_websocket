@@ -57,6 +57,15 @@
 <script>
     let socket = null;
 
+    window.onbeforeunload = function() {
+        let jsonData = {};
+        console.log("Leaving connection")
+        jsonData["action"] = "leaving";
+        socket.send(JSON.stringify(jsonData));
+    }
+
+
+
     document.addEventListener("DOMContentLoaded", function (){
         socket = new WebSocket("ws://127.0.0.1:5555/ws");
         socket.onopen = () => {

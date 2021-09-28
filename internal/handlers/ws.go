@@ -90,16 +90,19 @@ func ListenToWsChan() {
 	for {
 		e := <- wsChan
 		switch e.Action {
-		case "username":
+		case "username": // возвращаем список пользователей(соединений)
 			clients[e.Conn] = e.Username
 			users := getUsers()
 			response.Action = "list_users"
 			response.ConnectedUsers = users
 			broadCastAll(response)
 
-			//response.Action = "Получены данные"
-			//response.Message = fmt.Sprintf("Сообщение %s", e.Action)
-			//broadCastAll(response)
+		case "leaving": // удаляем пользователя(соединение) после сигнала о том чт опользователь отсоединился
+			response.Action = "list_users"
+			delete(clients, e.Conn)
+			users := getUsers()
+			response.ConnectedUsers = users
+			broadCastAll(response)
 		}
 	}
 }
