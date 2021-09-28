@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -103,6 +104,11 @@ func ListenToWsChan() {
 			users := getUsers()
 			response.ConnectedUsers = users
 			broadCastAll(response)
+
+		case "broadcast": // отправка всем соединеням сообщения
+			response.Action = "broadcast"
+			response.Message = fmt.Sprintf("<strong>%s</strong>: %s", e.Username, e.Message)
+			broadCastAll(response)
 		}
 	}
 }
@@ -124,7 +130,9 @@ func broadCastAll(response WsJson)  {
 func getUsers() []string{
 	var users []string
 	for _, user := range clients {
-		users = append(users, user)
+		if user != "" {
+			users = append(users, user)
+		}
 	}
 	sort.Strings(users)
 	return users
