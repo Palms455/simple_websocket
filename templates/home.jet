@@ -38,6 +38,9 @@
             <hr>
             <a href="javascript:void(0);" class="btn btn-outline-secondary" id="sendBtn">Отправить сообщение</a>
             <input type="hidden" name="action" id="action">
+            <div id="status" class="mt-2 float-end">
+
+            </div>
             <hr>
             <div id="output" class="chatbox"></div>
 
@@ -74,11 +77,18 @@
 
     document.addEventListener("DOMContentLoaded", function (){
         socket = new ReconnectingWebSocket("ws://127.0.0.1:5555/ws", null, {debug: true, reconnectInterval: 3000});
+
+        const offline = `<span class="badge bg-danger">Отсутствует подключение</span>`
+        const online = `<span class="badge bg-success">Подключено</span>`
+        let statusDiv = document.getElementById("status");
+
         socket.onopen = () => {
             console.log("Connected");
+            statusDiv.innerHTML = online;
         }
         socket.onclose = () => {
             console.log("Conn close");
+            statusDiv.innerHTML = offline;
         }
         socket.onerror = error => {
             console.log("Error ", error)
