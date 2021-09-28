@@ -105,14 +105,14 @@
             }
         }
 
-        let userInput = document.getElementById("username")
-        userInput.addEventListener("change", function (){
+
+        userField.addEventListener("change", function (){
             let jsonData = {};
             jsonData["action"] = "username"
             jsonData["username"] = this.value;
             socket.send(JSON.stringify(jsonData))
         })
-        document.getElementById("message").addEventListener("keydown", function(event) {
+        msgField.addEventListener("keydown", function(event) {
             if (event.code === "Enter") {
                 if (!socket) {
                     console.log("not connect");
@@ -127,7 +127,6 @@
                 }
                 event.preventDefault();
                 event.stopPropagation();
-                sendMessage();
             }
         })
         document.getElementById("sendBtn").addEventListener("click", function(){
@@ -142,14 +141,13 @@
 
 
     })
-
     function sendMessage() {
         let jsonData = {};
         jsonData["action"] = "broadcast";
-        jsonData["username"] = document.getElementById("username").value;
-        jsonData["message"] = document.getElementById("message").value;
+        jsonData["username"] = userField.value;
+        jsonData["message"] = msgField.value;
         socket.send(JSON.stringify(jsonData))
-        document.getElementById("message").value = "";
+        msgField.value = "";
     }
 </script>
 </html>
